@@ -15,7 +15,7 @@
 
 <body>
     <div>
-      <h1 class = "exampleClass">
+      <h1 class = "exampleClass"  onclick = "exampleFunction()">
         Demo Page
       </h1>
         <div class ="exampleClass">
@@ -24,7 +24,7 @@
             </p>
             <form method="post" action="endPoint1.php">
                 <input type="text" name="data" placeholder="Placeholder">
-                <button type="submit">Submit</button>
+                <button type="button" onclick="exampleFunction()">Actual Button</button>
             </form>
 
         </div>
