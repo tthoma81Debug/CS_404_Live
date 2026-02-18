@@ -5,16 +5,20 @@
 <title>Demo 1</title>
     <!-- Required meta tags -->
 <meta charset="utf-8">
+<link rel ="stylesheet" href="mainCss.css">
 <style>
 </style>
+
+<script src="mainJs.js"></script>
+
 </head>
 
 <body>
     <div>
-      <h1>
+      <h1 class = "exampleClass">
         Demo Page
       </h1>
-        <div>
+        <div class ="exampleClass">
             <p>
                 This is a demo page.
             </p>

@@ -5,6 +5,7 @@
 <title>Demo 1</title>
     <!-- Required meta tags -->
 <meta charset="utf-8">
+<link rel="stylesheet" href="mainCss.css">
 <style>
 </style>  
 
@@ -15,7 +16,7 @@
       <h1>
         Demo Page
       </h1>
-        <div>
+        <div class ="exampleClass">
             <p>
                 This is a demo page.
             </p>
