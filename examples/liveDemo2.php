@@ -9,11 +9,11 @@
 <style>
 </style>
 
-<script src="fetchExample.js"></script>
+<script src="fetchExampleJS.js"></script>
 
 </head>
 
-<body>
+<body onload="setupStuff()">
     <div>
       <h1 class = "exampleClass"  onclick = "exampleFunction()">
         Demo Page
