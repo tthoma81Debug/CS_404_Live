@@ -9,7 +9,7 @@
 <style>
 </style>
 
-<script src="mainJs.js"></script>
+<script src="fetchExample.js"></script>
 
 </head>
 
