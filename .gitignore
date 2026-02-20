@@ -113,6 +113,9 @@ dist
 # FuseBox cache
 .fusebox/
 
+# lesson plan prep cache
+/examples/prep_lesson_plans_temp/
+
 # DynamoDB Local files
 .dynamodb/
 
