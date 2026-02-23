@@ -4,10 +4,14 @@ function sendScore(){
         score: 42
     };
 
+    
     //proven this was a function call
     fetch('./api/save-score.php',{
         method: 'POST',
-        body: payload
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
         //bug here? ;)
         //other bug here? ;)
     }).then(response => response.text()).then(data => {
@@ -17,7 +21,7 @@ function sendScore(){
     })
         
 
-    /*
+/*    
   //Note: This is intentionally broken. Can you tell why? Hint: 'timing' is important here.
   var Response = fetch('./api/save-score.php',{
         method: 'POST',
@@ -25,9 +29,11 @@ function sendScore(){
     })
     
     handleResponse(Response); 
-    */
+    
+*/
 
 }
+    
     
     function setupStuff()
     {
@@ -41,4 +47,5 @@ function sendScore(){
     {
         console.log("handleResponse called. response is: ", response);
     }
-    */
+        */
+    
