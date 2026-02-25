@@ -17,7 +17,9 @@ function sendScore(){
         console.log("Server response: ",data);
         //lets select the div we want to put the response in
         const fetchExampleDiv = document.getElementById("fetchExampleDiv");
-        fetchExampleDiv.textContent = "Server response: " + JSON.stringify(data);
+        var htmlParagraph = "<p>" + data.name + " scored " + data.score + " and said " + data.message + "</p>";
+        fetchExampleDiv.innerHTML = htmlParagraph;
+        //fetchExampleDiv.textContent = "Server response: " + JSON.stringify(data);
 
     }).catch(error=> {
         console.error("error in fetch");
