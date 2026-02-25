@@ -12,10 +12,13 @@ function sendScore(){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
-        //bug here? ;)
-        //other bug here? ;)
-    }).then(response => response.text()).then(data => {
+  
+    }).then(response => response.json()).then(data => {
         console.log("Server response: ",data);
+        //lets select the div we want to put the response in
+        const fetchExampleDiv = document.getElementById("fetchExampleDiv");
+        fetchExampleDiv.textContent = "Server response: " + JSON.stringify(data);
+
     }).catch(error=> {
         console.error("error in fetch");
     })

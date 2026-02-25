@@ -15,9 +15,12 @@
     $jsonData->score = 100;
     $jsonData->message = "Haha. That is all";
 
-    echo "Lets see if json decoding is working. The received name is " . $jsonData->name;
-    echo "Lets see if json decoding is working. The received score is " . $jsonData->score;
-    echo "Lets see if json decoding is working. The received message is " . $jsonData->message;
+    $jsonDataToSend = json_encode($jsonData);
+    echo $jsonDataToSend;
+
+    //echo "Lets see if json decoding is working. The received name is " . $jsonData->name;
+    //echo "Lets see if json decoding is working. The received score is " . $jsonData->score;
+    //echo "Lets see if json decoding is working. The received message is " . $jsonData->message;
 
 
     //echo "Lets see if json decoding is working. The received name is " . $jsonData['name'] . " and the score is " . $jsonData['score'];

@@ -28,6 +28,10 @@
             </form>
 
         </div>
+
+        <div id="fetchExampleDiv">
+        
+        </div>
     </div>
 
 <?php
