@@ -1,6 +1,6 @@
 <?php
     
-    //header('Content-Type: application/json');
+    header('Content-Type: application/json');
 
     //we have a bug here. Can you spot it?
     //$name = $_POST ['name'];
@@ -8,6 +8,11 @@
 
     //The whole request body
     $requestBody = file_get_contents('php://input');
+
+    $jsonData = json_decode($requestBody);
+
+    echo "Lets see if json decoding is working. The received name is " . $jsonData->name;;
+    //echo "Lets see if json decoding is working. The received name is " . $jsonData['name'] . " and the score is " . $jsonData['score'];
 
     /*
     $response = [
@@ -18,7 +23,7 @@
     ];
     */
 
-    echo "server just received a request. The data it heard was " . $requestBody;
+    //echo "server just received a request. The data it heard was " . $requestBody;
 
     
     //echo $response //this will not work as intended but it is a start
