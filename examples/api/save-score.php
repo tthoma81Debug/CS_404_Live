@@ -15,6 +15,18 @@
     $jsonData->score = 100;
     $jsonData->message = "Haha. That is all";
 
+    //db logic start
+
+    
+
+
+
+    //db logic end
+
+
+
+
+
     $jsonDataToSend = json_encode($jsonData);
     echo $jsonDataToSend;
 
