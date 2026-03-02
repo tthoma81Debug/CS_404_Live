@@ -23,6 +23,28 @@
     }
     else{
             echo "Database connection successful!\n";
+            //lets run a query
+
+            /*
+            $theSQL = "Select * from GamesTable;";
+            $theStatement = TheModel\simpleQuery($db,$theSQL);
+            $theStatement->bind_result($TheKey, $GameTitle, $GameRating);
+            while($theStatement->fetch()){
+                echo "Key: " . $TheKey . " Title: " . $GameTitle . " Rating: " . $GameRating . "\n";
+            }
+            */
+            $nameSQL = $jsonData->name;
+            $scoreSQL = $jsonData->score;
+            $theSQL = "Insert Into GamesTable (GameTitle, GameRating) VALUES (?, ?);";
+            $theStatement = TheModel\simpleQuery($db,$theSQL);
+            $theStatement->bind_result($nameSQL, $scoreSQL);
+
+
+
+
+            $theStatement->close();
+            $db->close();
+
             //echo $db
      }
 

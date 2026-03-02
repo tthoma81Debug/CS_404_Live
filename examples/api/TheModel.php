@@ -27,6 +27,33 @@ namespace TheModel {
         return $db;
     }
 
+    function simpleQuery($db, $query, $storeResult = true)
+    {
+        // Prepare the query
+        if (!($stmt = $db->prepare($query))) {
+            if (!Details::DB_SILENT_FAIL) {
+                echo "<!-- FAILED QUERY PREPARE: ($db->errno) $db->error -->\n";
+            }
+            return null;
+        }
+        
+        // Execute query
+        if (!$stmt->execute()) {
+            if (!Details::DB_SILENT_FAIL) {
+                echo "<!-- FAILED QUERY EXECUTE: check that database and statement are still open and valid -->\n";
+            }
+            return null;
+        }
+        
+        // Store the results for SELECT queries
+        if ($storeResult && strpos($query, 'SELECT') !== false) {
+            $stmt->store_result();
+        }
+        
+        // return the statement object
+        return $stmt;
+    }
+
 
 
 
