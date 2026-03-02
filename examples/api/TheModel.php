@@ -3,7 +3,7 @@ namespace TheModel {
     /**
      * A static class that holds details for database access.
      */
-    abstract class DatabaseDetails
+    abstract class Details
     {
         const DB_USER = 'phpUser';
         const DB_PW = '/(ua.cyzAMyQX/Wb';

@@ -13,17 +13,39 @@ function sendScore(){
         },
         body: JSON.stringify(payload)
   
-    }).then(response => response.json()).then(data => {
+    }).then(response => {
+        console.log("Reached the first then block. Response is:", response);
+        return response.text();
+    }).then(data => {
+        console.log("Reached the second then block. Data is:", data);   
+    });
+    
+    
+    /*
+    then(response => response().then(data => {
+        console.log("Reached the first then block. Response is:", response);
+        console.log("Data is:", data);
+    }))
+    //.then(response => response.json())
+    .catch(error => {
+        console.error("Hey. Php dropped the ball here. JS reached out and was like, hey, here is some json, and it was like....... and so here we are :). full error here:", error);
+        console.log(error.body);
+    })
+    .then(data => {
+        console.log("Reached the second then block. Data is:", data);
+
+        /*
         console.log("Server response: ",data);
         //lets select the div we want to put the response in
         const fetchExampleDiv = document.getElementById("fetchExampleDiv");
         var htmlParagraph = "<p>" + data.name + " scored " + data.score + " and said " + data.message + "</p>";
         fetchExampleDiv.innerHTML = htmlParagraph;
         //fetchExampleDiv.textContent = "Server response: " + JSON.stringify(data);
+        */
 
-    }).catch(error=> {
-        console.error("error in fetch");
-    })
+   // }).catch(error=> {
+    //    console.error("error in fetch. the second part.");
+   // })
         
 
 /*    

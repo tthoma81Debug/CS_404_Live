@@ -1,5 +1,5 @@
 <?php
-    
+    include "theModel.php";
     header('Content-Type: application/json');
 
     //we have a bug here. Can you spot it?
@@ -16,7 +16,19 @@
     $jsonData->message = "Haha. That is all";
 
     //db logic start
+    
+    $db = TheModel\connectToDatabase("GamesDB");
+    if ($db == null) {
+        die("<p>Failed to connect to database.</p></body></html>\n");
+    }
+    else{
+            echo "Database connection successful!\n";
+            //echo $db
+     }
 
+    //connect to db
+    //run query to insert the score
+    //close db connection
     
 
 
@@ -26,9 +38,9 @@
 
 
 
-
-    $jsonDataToSend = json_encode($jsonData);
-    echo $jsonDataToSend;
+    //uncomment later when using
+    //$jsonDataToSend = json_encode($jsonData);
+    //echo $jsonDataToSend;
 
     //echo "Lets see if json decoding is working. The received name is " . $jsonData->name;
     //echo "Lets see if json decoding is working. The received score is " . $jsonData->score;
