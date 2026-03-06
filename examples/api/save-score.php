@@ -36,12 +36,20 @@
             $nameSQL = $jsonData->name;
             $scoreSQL = $jsonData->score;
             $theSQL = "Insert Into GamesTable (GameTitle, GameRating) VALUES (?, ?);";
-            $theStatement = TheModel\simpleQuery($db,$theSQL);
-            $theStatement->bind_result($nameSQL, $scoreSQL);
 
+            //new for insert statements
+            $theStatement = $db->prepare($theSQL);
+            // 's' = string, 'i' = integer (adjust types as appropriate)
+            $theStatement->bind_param("sd", $nameSQL, $scoreSQL);
+            $theResults; //just so we know where the results of the execute are stored for debugging
+            $theResults = $theStatement->execute();
 
+            if ($theResults === false) {
+                die("Execute failed: " . $theStatement->error);
+            }
 
-
+            echo "Success. Rows inserted: " . $theStatement->affected_rows;
+            //close the statement and connection
             $theStatement->close();
             $db->close();
 
