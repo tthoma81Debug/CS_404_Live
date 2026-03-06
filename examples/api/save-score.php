@@ -22,7 +22,7 @@
         die("<p>Failed to connect to database.</p></body></html>\n");
     }
     else{
-            echo "Database connection successful!\n";
+            //echo "Database connection successful!\n";
             //lets run a query
 
             /*
@@ -48,7 +48,7 @@
                 die("Execute failed: " . $theStatement->error);
             }
 
-            echo "Success. Rows inserted: " . $theStatement->affected_rows;
+            //echo "Success. Rows inserted: " . $theStatement->affected_rows;
             //close the statement and connection
             $theStatement->close();
             $db->close();
@@ -68,9 +68,12 @@
 
 
 
-    //uncomment later when using
-    //$jsonDataToSend = json_encode($jsonData);
-    //echo $jsonDataToSend;
+    //comment if going back to text
+    $jsonData->name = "The name that was sent is here. not going to echo it back";
+    $jsonData->score = 300;
+    $jsonData->message = "Yep. added it the database. How are you doing. This isn't the data. I wasn't going to echo it  back";
+    $jsonDataToSend = json_encode($jsonData);
+    echo $jsonDataToSend;
 
     //echo "Lets see if json decoding is working. The received name is " . $jsonData->name;
     //echo "Lets see if json decoding is working. The received score is " . $jsonData->score;

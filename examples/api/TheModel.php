@@ -21,7 +21,7 @@ namespace TheModel {
         }
         else
         {
-            echo "<!-- SUCCESSFUL DB CONNECT -->\n";
+            //echo "<!-- SUCCESSFUL DB CONNECT -->\n";
         }
 
         return $db;
