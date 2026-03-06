@@ -13,7 +13,7 @@
 
 </head>
 
-<body onload="setupStuff()">
+<body>
     <div>
       <h1 class = "exampleClass"  onclick = "exampleFunction()">
         Demo Page
@@ -24,7 +24,7 @@
             </p>
             <form method="post" action="endPoint1.php">
                 <input type="text" name="data" placeholder="Placeholder">
-                <button type="button" onclick="exampleFunction()">Actual Button</button>
+                <button type="button" onclick="sendScore()">Actual Button. Update Database Button. Yes. This is that button</button>
             </form>
 
         </div>
