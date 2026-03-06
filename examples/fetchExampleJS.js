@@ -1,6 +1,21 @@
-function sendScore(){
+
+function clientValidateAndSend()
+{
+    clientValidate();
+
+    var name = document.getElementById("nameInput").value;
+
+    sendScore(name);
+}
+
+function clientValidate()
+{
+    //validation logic here.
+}
+
+function sendScore(name){
     const payload = {
-        name: "Ada Lavelace",
+        name: name,
         score: 42
     };
 

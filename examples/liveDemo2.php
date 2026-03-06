@@ -23,8 +23,8 @@
                 This is a demo page.
             </p>
             <form method="post" action="endPoint1.php">
-                <input type="text" name="data" placeholder="Placeholder">
-                <button type="button" onclick="sendScore()">Actual Button. Update Database Button. Yes. This is that button</button>
+                <input type="text" id = "nameInput" name="data" placeholder="Placeholder">
+                <button type="button" onclick="clientValidateAndSend()">Actual Button. Update Database Button. Yes. This is that button</button>
             </form>
 
         </div>

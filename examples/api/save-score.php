@@ -11,7 +11,7 @@
 
     $jsonData = json_decode($requestBody);
 
-    $jsonData->name = "Dr. T";
+    //$jsonData->name = "Dr. T";
     $jsonData->score = 100;
     $jsonData->message = "Haha. That is all";
 
