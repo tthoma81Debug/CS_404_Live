@@ -41,10 +41,13 @@ function sendScore(name){
         
         const forumComponent = document.getElementById("postText");
         const theUsername = document.getElementById("theUsername");
+        const roleExampleSpan = document.getElementById("roleExampleSpan");
+
 
         //forumComponent.textContent = data.score + " is the score " + data.message + " is the message. This is the server response.";
         forumComponent.textContent = data.message;
-        
+        roleExampleSpan.textContent = data.role;
+
 
         theUsername.textContent = data.name;
         //const fetchExampleDiv = document.getElementById("fetchExampleDiv");
