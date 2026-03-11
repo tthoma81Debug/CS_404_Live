@@ -12,7 +12,7 @@
     $jsonData = json_decode($requestBody);
 
     //$jsonData->name = "Dr. T";
-    $jsonData->score = 100;
+    //$jsonData->score = 100;
     $jsonData->message = "Haha. That is all";
 
     //db logic start
@@ -69,9 +69,10 @@
 
 
     //comment if going back to text
-    $jsonData->name = "The name that was sent is here. not going to echo it back";
-    $jsonData->score = 300;
-    $jsonData->message = "Yep. added it the database. How are you doing. This isn't the data. I wasn't going to echo it  back";
+    //$jsonData->name = "The name that was sent is here. not going to echo it back";
+    //$jsonData->score = 300;
+    //$jsonData->message = "Yep. added it the database. How are you doing. This isn't the data. I wasn't going to echo it  back";
+    
     $jsonDataToSend = json_encode($jsonData);
     echo $jsonDataToSend;
 

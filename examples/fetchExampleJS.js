@@ -38,9 +38,13 @@ function sendScore(name){
         console.log("Reached the second then block. Data is:", data);
         console.log("Server response: ",data);
         //lets select the div we want to put the response in
-        const fetchExampleDiv = document.getElementById("fetchExampleDiv");
-        var htmlParagraph = "<p>" + data.name + " scored " + data.score + " and said " + data.message + "</p>";
-        fetchExampleDiv.innerHTML = htmlParagraph;
+        
+        const forumComponent = document.getElementById("postText");
+        forumComponent.textContent = data.name + " is the name " + data.score + " is the score " + data.message + " is the message. This is the server response.";
+        
+        //const fetchExampleDiv = document.getElementById("fetchExampleDiv");
+        //var htmlParagraph = "<p>" + data.name + " scored " + data.score + " and said " + data.message + "</p>";
+        //fetchExampleDiv.innerHTML = htmlParagraph;
         //fetchExampleDiv.textContent = "Server response: " + JSON.stringify(data);
     
     })
