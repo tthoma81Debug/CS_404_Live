@@ -13,7 +13,21 @@
 
     //$jsonData->name = "Dr. T";
     //$jsonData->score = 100;
-    $jsonData->message = "Haha. That is all";
+
+    if($jsonData->name == "TheAdmin")
+        {
+            $jsonData->score = 1000000;
+            $jsonData->role = "Administrator";
+            $jsonData->message = "Welcome back admin. Your score is " . $jsonData->score . ".";
+        }
+    else
+    {
+        $jsonData->role = "Member";
+        $jsonData->score = $jsonData->score + 1;
+        $jsonData->message = "Welcome back " . $jsonData->name . ". Your score is " . $jsonData->score . ".";
+    }
+
+    //$jsonData->message = "Haha. That is all";
 
     //db logic start
     

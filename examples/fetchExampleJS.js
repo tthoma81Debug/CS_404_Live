@@ -40,8 +40,13 @@ function sendScore(name){
         //lets select the div we want to put the response in
         
         const forumComponent = document.getElementById("postText");
-        forumComponent.textContent = data.name + " is the name " + data.score + " is the score " + data.message + " is the message. This is the server response.";
+        const theUsername = document.getElementById("theUsername");
+
+        //forumComponent.textContent = data.score + " is the score " + data.message + " is the message. This is the server response.";
+        forumComponent.textContent = data.message;
         
+
+        theUsername.textContent = data.name;
         //const fetchExampleDiv = document.getElementById("fetchExampleDiv");
         //var htmlParagraph = "<p>" + data.name + " scored " + data.score + " and said " + data.message + "</p>";
         //fetchExampleDiv.innerHTML = htmlParagraph;
