@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div>
+    <div id="mainContainer">
       <h1 class = "exampleClass"  onclick = "exampleFunction()">
         Demo Page
       </h1>
