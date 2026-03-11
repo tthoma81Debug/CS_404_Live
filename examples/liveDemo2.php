@@ -34,27 +34,27 @@
         </div>
 
         <!-- This is where we will sculpt a component and then use it for a post -->
-        <div id="exampleComponentDiv" class="componentDivClass"> 
+        <div id='exampleComponentDiv' class='componentDivClass'> 
             
-            <div id="userNameDiv" class="userNameDivClass">
-                <div id="userNameImageContainer" class="userImageClass">
-                    <img src="https://example.comBROKENLINK" alt="Profile Picture Here"> </img>
+            <div id='userNameDiv' class='userNameDivClass'>
+                <div id='userNameImageContainer' class='userImageClass'>
+                    <img src='https://example.comBROKENLINK' alt='Profile Picture Here'> </img>
                 </div>  
-                <p id="theUsername" class="userNameClass">Invincible8493</p>
-                <span id="roleExampleSpan" class="roleClass">Member</span>                 
+                <p id='theUsername' class='userNameClass'>Invincible8493</p>
+                <span id='roleExampleSpan' class='roleClass'>Member</span>                 
             </div>      
-            <p id="postText">This is an example component. It is just a div with some text in it. We will use this as a template for creating new components that we will then post to the server.</p>
+            <p id='postText'>This is an example component. It is just a div with some text in it. We will use this as a template for creating new components that we will then post to the server.</p>
         </div>
 
 
-        <div id="exampleComponentDiv" class="componentDivClass"> 
+        <div id='exampleComponentDiv' class='componentDivClass'> 
             
-            <div id="userNameDiv" class="userNameDivClass">
-                <div id="userNameImageContainer" class="userImageClass">
-                    <img src="https://example.comBROKENLINK" alt="Profile Picture Here"> </img>
+            <div id='userNameDiv' class='userNameDivClass'>
+                <div id='userNameImageContainer' class='userImageClass'>
+                    <img src='https://example.comBROKENLINK' alt='Profile Picture Here'> </img>
                 </div>  
-                <p id="theUsername" class="userNameClass">Invincible8493</p>
-                <span id="roleExampleSpan" class="roleClass">Member</span>                 
+                <p id='theUsername' class='userNameClass'>Invincible8493</p>
+                <span id='roleExampleSpan' class='roleClass'>Member</span>                 
             </div>      
             <p>This is an example component. It is just a div with some text in it. We will use this as a template for creating new components that we will then post to the server.</p>
         </div>
@@ -78,7 +78,7 @@
     </div>
 
 <?php
-    echo "Hello, World!" . "php is working! version is " . phpversion();
+    echo 'Hello, World!' . 'php is working! version is ' . phpversion();
 ?>
 
 
