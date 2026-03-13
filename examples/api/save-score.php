@@ -14,18 +14,22 @@
     //$jsonData->name = "Dr. T";
     //$jsonData->score = 100;
 
+    $userMesssageText = $jsonData->message;
+
     if($jsonData->name == "TheAdmin")
         {
             $jsonData->score = 1000000;
             $jsonData->role = "Administrator";
-            $jsonData->message = "Welcome back admin. Your score is " . $jsonData->score . ".";
+            $jsonData->message = "Welcome back admin. Your score is " . $jsonData->score . "." . ". Message you posted is: " . $userMesssageText;
         }
     else
     {
         $jsonData->role = "Member";
         $jsonData->score = $jsonData->score + 1;
-        $jsonData->message = "Welcome back " . $jsonData->name . ". Your score is " . $jsonData->score . ".";
+        $jsonData->message = "Welcome back " . $jsonData->name . ". Your score is " . $jsonData->score . ".". ". Message you posted is: " . $userMesssageText;
     }
+
+
 
     //$jsonData->message = "Haha. That is all";
 
