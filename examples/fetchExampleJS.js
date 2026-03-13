@@ -1,3 +1,6 @@
+var randomDudeAvatar = "smileYellow.jpg";
+var trollAvatar = "redFrown.jpg";
+var currentAvatar = randomDudeAvatar;
 
 function clientValidateAndSend()
 {
@@ -56,13 +59,22 @@ function sendScore(name, message){
         //begin adding div
         //var newDiv = "<div id='exampleComponentDiv' class='componentDivClass'> <div id='userNameDiv' class='userNameDivClass'><div id='userNameImageContainer' class='userImageClass'><img src='https://example.comBROKENLINK' alt='Profile Picture Here'> </img></div>  <p id='theUsername' class='userNameClass'>Invincible8493</p><span id='roleExampleSpan' class='roleClass'>Member</span>                 </div>      <p id='postText'>This is an example component. It is just a div with some text in it. We will use this as a template for creating new components that we will then post to the server.</p></div>";
         
+        if(data.name == "troll222")
+        {
+            currentAvatar = trollAvatar;
+        }
+        else
+        {
+            currentAvatar = randomDudeAvatar;
+        }
+
         //now with template
         var newDiv = `
         <div Postid='exampleComponentDiv' class='componentDivClass'> 
             
             <div Postid='userNameDiv' class='userNameDivClass'>
                 <div Postid='userNameImageContainer' class='userImageClass'>
-                    <img src='smileYellow.jpg' alt='Profile Picture Here'> </img>
+                    <img src='${currentAvatar}' alt='Profile Picture Here'> </img>
                 </div>  
                 <p Postid='theUsername' class='userNameClass'>${data.name}</p>
                 <span Postid='roleExampleSpan' class='roleClass'>${data.role}</span>                 
