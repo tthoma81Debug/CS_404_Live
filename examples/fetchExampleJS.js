@@ -39,33 +39,33 @@ function sendScore(name){
         console.log("Server response: ",data);
         //lets select the div we want to put the response in
         
-        const forumComponent = document.getElementById("postText");
-        const theUsername = document.getElementById("theUsername");
-        const roleExampleSpan = document.getElementById("roleExampleSpan");
-        const mainContainer = document.getElementById("mainContainer");
+        //const forumComponent = document.getElementById("postText");
+        //const theUsername = document.getElementById("theUsername");
+       // const roleExampleSpan = document.getElementById("roleExampleSpan");
+        //const mainContainer = document.getElementById("mainContainer");
 
         //forumComponent.textContent = data.score + " is the score " + data.message + " is the message. This is the server response.";
-        forumComponent.textContent = data.message;
-        roleExampleSpan.textContent = data.role;
+        //forumComponent.textContent = data.message;
+        //roleExampleSpan.textContent = data.role;
 
 
-        theUsername.textContent = data.name;
+        //theUsername.textContent = data.name;
 
         //begin adding div
         //var newDiv = "<div id='exampleComponentDiv' class='componentDivClass'> <div id='userNameDiv' class='userNameDivClass'><div id='userNameImageContainer' class='userImageClass'><img src='https://example.comBROKENLINK' alt='Profile Picture Here'> </img></div>  <p id='theUsername' class='userNameClass'>Invincible8493</p><span id='roleExampleSpan' class='roleClass'>Member</span>                 </div>      <p id='postText'>This is an example component. It is just a div with some text in it. We will use this as a template for creating new components that we will then post to the server.</p></div>";
         
         //now with template
         var newDiv = `
-        <div id='exampleComponentDiv' class='componentDivClass'> 
+        <div Postid='exampleComponentDiv' class='componentDivClass'> 
             
-            <div id='userNameDiv' class='userNameDivClass'>
-                <div id='userNameImageContainer' class='userImageClass'>
+            <div Postid='userNameDiv' class='userNameDivClass'>
+                <div Postid='userNameImageContainer' class='userImageClass'>
                     <img src='https://example.comBROKENLINK' alt='Profile Picture Here'> </img>
                 </div>  
-                <p id='theUsername' class='userNameClass'>Invincible8493</p>
-                <span id='roleExampleSpan' class='roleClass'>Member</span>                 
+                <p Postid='theUsername' class='userNameClass'>${data.name}</p>
+                <span Postid='roleExampleSpan' class='roleClass'>${data.role}</span>                 
             </div>      
-            <p id='postText'>This is an example component. It is just a div with some text in it. We will use this as a template for creating new components that we will then post to the server.</p>
+            <p Postid='postText'>${data.message}</p>
         </div>`;
 
 
