@@ -20,13 +20,15 @@
         {
             $jsonData->score = 1000000;
             $jsonData->role = "Administrator";
-            $jsonData->message = "Welcome back admin. Your score is " . $jsonData->score . "." . ". Message you posted is: " . $userMesssageText;
+            $jsonData->message = $userMesssageText;
+            //$jsonData->message = "Welcome back admin. Your score is " . $jsonData->score . "." . ". Message you posted is: " . $userMesssageText;
         }
     else
     {
         $jsonData->role = "Member";
         $jsonData->score = $jsonData->score + 1;
-        $jsonData->message = "Welcome back " . $jsonData->name . ". Your score is " . $jsonData->score . ".". ". Message you posted is: " . $userMesssageText;
+        $jsonData->message = $userMesssageText;
+        //$jsonData->message = "Welcome back " . $jsonData->name . ". Your score is " . $jsonData->score . ".". ". Message you posted is: " . $userMesssageText;
     }
 
 
