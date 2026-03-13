@@ -4,8 +4,9 @@ function clientValidateAndSend()
     clientValidate();
 
     var name = document.getElementById("nameInput").value;
+    var message = document.getElementById("messageBox").value;
 
-    sendScore(name);
+    sendScore(name, message);
 }
 
 function clientValidate()
@@ -13,9 +14,10 @@ function clientValidate()
     //validation logic here.
 }
 
-function sendScore(name){
+function sendScore(name, message){
     const payload = {
         name: name,
+        message: message,
         score: 42
     };
 
@@ -60,7 +62,7 @@ function sendScore(name){
             
             <div Postid='userNameDiv' class='userNameDivClass'>
                 <div Postid='userNameImageContainer' class='userImageClass'>
-                    <img src='https://example.comBROKENLINK' alt='Profile Picture Here'> </img>
+                    <img src='smileYellow.jpg' alt='Profile Picture Here'> </img>
                 </div>  
                 <p Postid='theUsername' class='userNameClass'>${data.name}</p>
                 <span Postid='roleExampleSpan' class='roleClass'>${data.role}</span>                 

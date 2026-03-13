@@ -23,7 +23,12 @@
                 This is a demo page.
             </p>
             <form method="post" action="endPoint1.php">
+                <label for="nameInput">Name:</label>
                 <input type="text" id = "nameInput" name="data" placeholder="Placeholder">
+
+                <label for="messageBox">Message:</label>
+                <textarea id="messageBox" name="messageBox" rows="5" cols="30">Write your message here...</textarea>
+
                 <button type="button" onclick="clientValidateAndSend()">Actual Button. Update Database Button. Yes. This is that button</button>
             </form>
 
