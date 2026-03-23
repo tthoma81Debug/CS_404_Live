@@ -55,15 +55,16 @@
             */
             $nameSQL = $jsonData->name;
             $scoreSQL = $jsonData->score;
-            $theSQL = "Insert Into GamesTable (GameTitle, GameRating) VALUES (?, ?);";
-
+            //$theSQL = "Insert Into GamesTable (GameTitle, GameRating) VALUES (?, ?);";
+            $theSQL = "Insert Into PostsTable (username,message,role) VALUES (?, ?, ?);";
+            
 
             //tested sql string. NEXT STEP: prepare statement, bind parameters, execute statement. Then we will be able to insert data from the json into the database.
             //"Insert Into PostsTable (username,message,role) VALUES ("theUsertexthere", "theMessagetextnere", "theroletexthere");"
             //new for insert statements
             $theStatement = $db->prepare($theSQL);
             // 's' = string, 'i' = integer (adjust types as appropriate)
-            $theStatement->bind_param("sd", $nameSQL, $scoreSQL);
+            $theStatement->bind_param("sss", $jsonData->name, $jsonData->message, $jsonData->role);
             $theResults; //just so we know where the results of the execute are stored for debugging
             $theResults = $theStatement->execute();
 
