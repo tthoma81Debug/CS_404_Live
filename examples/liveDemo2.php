@@ -30,6 +30,7 @@
                 <textarea id="messageBox" name="messageBox" rows="5" cols="30">Write your message here...</textarea>
 
                 <button type="button" onclick="clientValidateAndSend()">Actual Button. Update Database Button. Yes. This is that button</button>
+                <button type="button" onclick="getUpdates()">Get Updates Button. Yes. This is that button</button>
             </form>
 
         </div>

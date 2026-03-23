@@ -17,6 +17,31 @@ function clientValidate()
     //validation logic here.
 }
 
+function getUpdates(){
+
+        fetch('./api/PullFromDB.php',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: "{}"
+  
+    })
+
+    .then(response => response.json())
+    .catch(error => {
+        console.error("Error fetching updates:", error);
+    })
+    .then(data => {
+        console.log("Updates from server:", data);
+        // update later with specific data received
+
+        });
+
+        
+
+}
+
 function sendScore(name, message){
     const payload = {
         name: name,
