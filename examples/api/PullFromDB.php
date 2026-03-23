@@ -20,14 +20,14 @@
             //echo "Database connection successful!\n";
             //lets run a query
 
-            /*
-            $theSQL = "Select * from GamesTable;";
+            
+            $theSQL = "Select * from PostsTable;";
             $theStatement = TheModel\simpleQuery($db,$theSQL);
-            $theStatement->bind_result($TheKey, $GameTitle, $GameRating);
+            $theStatement->bind_result($theKey, $usernameFromDB, $messageFromDB, $roleFromDB);
             while($theStatement->fetch()){
-                echo "Key: " . $TheKey . " Title: " . $GameTitle . " Rating: " . $GameRating . "\n";
+                echo "Key: " . $theKey . " Username: " . $usernameFromDB . " Message: " . $messageFromDB . " Role: " . $roleFromDB . "\n";
             }
-            */
+            
             //$nameSQL = $jsonData->name;
             //$scoreSQL = $jsonData->score;
             
@@ -39,15 +39,26 @@
             //$db->close();
 
             //echo $db
-     }
-
+     
+    /*
     $exampleResponse = [
         'success' => true,
-        'message' => "Data received and processed successfully."
+        'username' => $usernameFromDB,
+        'role' => $roleFromDB,
+        'message' => $messageFromDB
     ];
 
     $jsonDataToSend = json_encode($exampleResponse);
     echo $jsonDataToSend;
+
+    $theStatement->close();
+    $db->close();
+    */
+    echo "query worked and done";
+
+
+
+    } //end else for successful db connection
 
    /*
     $response = [

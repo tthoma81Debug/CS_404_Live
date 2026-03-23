@@ -28,7 +28,7 @@ function getUpdates(){
   
     })
 
-    .then(response => response.json())
+    .then(response => response.text())
     .catch(error => {
         console.error("Error fetching updates:", error);
     })
@@ -38,7 +38,7 @@ function getUpdates(){
 
         });
 
-        
+
 
 }
 
