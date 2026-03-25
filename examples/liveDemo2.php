@@ -21,7 +21,7 @@
   Launch static backdrop modal
 </button>
 
-<div class="modal">
+<div class="modal" id="simpleModal" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
