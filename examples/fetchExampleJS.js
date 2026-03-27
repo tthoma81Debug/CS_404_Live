@@ -27,17 +27,41 @@ function getUpdates(){
         body: "{}"
   
     })
-
-    .then(response => response.text())
+    .then(response => response.json())
     .catch(error => {
-        console.error("Error fetching updates:", error);
+        console.error("Hey. Php dropped the ball here. JS reached out and was like, hey, here is some json, and it was like....... and so here we are :). full error here:", error);
+        console.log(error.body);
     })
     .then(data => {
-        console.log("Updates from server:", data);
-        // update later with specific data received
+        console.log("Reached the second then block. Data is:", data);
+        console.log("Server response: ",data);
+       
+        /*
+        //now with template
+        var newDiv = `
+        <div Postid='exampleComponentDiv' class='componentDivClass'> 
+            
+            <div Postid='userNameDiv' class='userNameDivClass'>
+                <div Postid='userNameImageContainer' class='userImageClass'>
+                    <img src='${currentAvatar}' alt='Profile Picture Here'> </img>
+                </div>  
+                <p Postid='theUsername' class='userNameClass'>${data.name}</p>
+                <span Postid='roleExampleSpan' class='roleClass'>${data.role}</span>                 
+            </div>      
+            <p Postid='postText'>${data.message}</p>
+        </div>`;
 
-        });
 
+        const parser = new DOMParser();
+        const newDivNode = parser.parseFromString(newDiv, 'text/html');
+        
+        
+        mainContainer.append(newDivNode.body);
+
+        //end adding div
+        */
+    
+    })
 
 
 }

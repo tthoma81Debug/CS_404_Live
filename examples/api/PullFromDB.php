@@ -24,10 +24,38 @@
             $theSQL = "Select * from PostsTable;";
             $theStatement = TheModel\simpleQuery($db,$theSQL);
             $theStatement->bind_result($theKey, $usernameFromDB, $messageFromDB, $roleFromDB);
+            
+            /*
             while($theStatement->fetch()){
                 echo "Key: " . $theKey . " Username: " . $usernameFromDB . " Message: " . $messageFromDB . " Role: " . $roleFromDB . "\n";
             }
+            */
+
             
+
+            if($theStatement->fetch()){
+               
+                 $databaseResults = [
+                    'username' => $usernameFromDB,
+                    'role' => $roleFromDB,
+                    'message' => $messageFromDB
+                ];
+                $jsonDataToSend = json_encode($databaseResults);
+                echo $jsonDataToSend;
+
+
+             }
+             else{
+                echo json_encode(['success' => false, 'message' => 'No posts found in the database.']);
+             }
+
+
+
+            
+
+            //$theStatement->close();
+            //$db->close();
+
             //$nameSQL = $jsonData->name;
             //$scoreSQL = $jsonData->score;
             
@@ -51,10 +79,9 @@
     $jsonDataToSend = json_encode($exampleResponse);
     echo $jsonDataToSend;
 
-    $theStatement->close();
-    $db->close();
+    
     */
-    echo "query worked and done";
+    //echo "query worked and done";
 
 
 
