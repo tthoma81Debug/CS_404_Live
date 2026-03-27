@@ -36,7 +36,7 @@ function getUpdates(){
         console.log("Reached the second then block. Data is:", data);
         console.log("Server response: ",data);
        
-        /*
+        
         //now with template
         var newDiv = `
         <div Postid='exampleComponentDiv' class='componentDivClass'> 
@@ -45,7 +45,7 @@ function getUpdates(){
                 <div Postid='userNameImageContainer' class='userImageClass'>
                     <img src='${currentAvatar}' alt='Profile Picture Here'> </img>
                 </div>  
-                <p Postid='theUsername' class='userNameClass'>${data.name}</p>
+                <p Postid='theUsername' class='userNameClass'>${data.username}</p>
                 <span Postid='roleExampleSpan' class='roleClass'>${data.role}</span>                 
             </div>      
             <p Postid='postText'>${data.message}</p>
@@ -59,7 +59,7 @@ function getUpdates(){
         mainContainer.append(newDivNode.body);
 
         //end adding div
-        */
+        
     
     })
 
