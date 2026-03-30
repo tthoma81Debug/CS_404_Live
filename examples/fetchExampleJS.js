@@ -2,6 +2,7 @@ var randomDudeAvatar = "smileYellow.jpg";
 var trollAvatar = "redFrown.jpg";
 var currentAvatar = randomDudeAvatar;
 var theTimer;
+var timerCounter = 0;
 
 function clientValidateAndSend()
 {
@@ -195,25 +196,38 @@ function sendScore(name, message){
         console.log("Timer stopped.");
     }
 
-    function managePageUpdates()
+    async function managePageUpdates()
     {
-        console.log("Checking for updates...");
-        var updatesAvailable = areThereUpdates();
 
-        if(updatesAvailable)
+        if(timerCounter > 0)
         {
-            console.log("Manage Page Updates ran and Updates are available. Fetching updates...");
-            getUpdates();
+            console.log("Manage Page Updates ran. This is not the first time it has run. Will check for updates...");
         }
-        else{
-            console.log("Manage Page updates ran and..No updates available. Will check again in 5 seconds.");
+        else
+        {
+            console.log("Manage Page Updates ran. This is the first time it has run. Will check for updates...");
+            console.log("Checking for updates...");
+            var updatesAvailable = await areThereUpdates();
+
+            if(updatesAvailable)
+            {
+                console.log("Manage Page Updates ran and Updates are available. Fetching updates...");
+                getUpdates();
+            }
+            else{
+                console.log("Manage Page updates ran and..No updates available. Will check again in 5 seconds.");
+            }
+
         }
+
+        timerCounter++;
+        console.log("Timer has run " + timerCounter + " times.");
     }
 
-    function areThereUpdates()
+    async function areThereUpdates()
     {
         
-        fetch('./api/PullFromDB.php',{
+        return fetch('./api/PullFromDB.php',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -229,33 +243,43 @@ function sendScore(name, message){
     .then(data => {
         console.log("Reached the second then block. Data is:", data);
         console.log("Server response: ",data);
-       
+        var updatesAvailable = false;
         //get previous name and message
 
         //grab elements
         const elementsUsername = document.querySelectorAll('[Postid="theUsername"]');
         const elementsMessage = document.querySelectorAll('[Postid="postText"]');
         
-        //grab text to compare
-        const previousName = elementsUsername[0].textContent;
-        const previousMessage = elementsMessage[0].textContent;
-        
-        
 
 
 
-        if(data.message == previousMessage && data.name == previousName)
+        //sanity check (avoids trying to read something inside a null) which would cause an error and break the timer loop. If there are no elements with those postids, we will assume there are updates to be had, so we can populate the page with the first post.
+        if(elementsUsername.length == 0 || elementsMessage.length == 0)
         {
-            console.log(" Are there updates Ran. No new updates.");
-            return false;
+            console.log("Nothing on the page yet. We will assume updates are available so we can populate the page.");
+            updatesAvailable = true;
+          
         }
         else
         {
-            console.log(" Are there updates Ran. There are new updates.");
-            return true;
+            console.log("Elements with Postid theUsername and postText found. Will compare their text content to the server response to determine if we should update.");
+            
+            //grab text to compare
+            const previousName = elementsUsername[0].textContent;
+            const previousMessage = elementsMessage[0].textContent;
+
+            if(data.message == previousMessage && data.name == previousName)
+            {
+                console.log(" Are there updates Ran. No new updates.");
+                updatesAvailable = false;
+            }
+            else
+            {
+                console.log(" Are there updates Ran. There are new updates.");
+                updatesAvailable = true;
+            }
         }
-
-
+       return updatesAvailable;
     })
-    }
+}
     
