@@ -186,12 +186,76 @@ function sendScore(name, message){
     function startTimer()
     {
         console.log("Timer started. Will fetch updates every 5 seconds.");
-        theTimer = setInterval(getUpdates, 5000);
+        theTimer = setInterval(managePageUpdates, 5000);
     }
 
     function stopTimer()
     {
         clearInterval(theTimer);
         console.log("Timer stopped.");
+    }
+
+    function managePageUpdates()
+    {
+        console.log("Checking for updates...");
+        var updatesAvailable = areThereUpdates();
+
+        if(updatesAvailable)
+        {
+            console.log("Manage Page Updates ran and Updates are available. Fetching updates...");
+            getUpdates();
+        }
+        else{
+            console.log("Manage Page updates ran and..No updates available. Will check again in 5 seconds.");
+        }
+    }
+
+    function areThereUpdates()
+    {
+        
+        fetch('./api/PullFromDB.php',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: "{}"
+  
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error("Hey. Php dropped the ball here. JS reached out and was like, hey, here is some json, and it was like....... and so here we are :). full error here:", error);
+        console.log(error.body);
+    })
+    .then(data => {
+        console.log("Reached the second then block. Data is:", data);
+        console.log("Server response: ",data);
+       
+        //get previous name and message
+
+        //grab elements
+        const elementsUsername = document.querySelectorAll('[Postid="theUsername"]');
+        const elementsMessage = document.querySelectorAll('[Postid="postText"]');
+        
+        //grab text to compare
+        const previousName = elementsUsername[0].textContent;
+        const previousMessage = elementsMessage[0].textContent;
+        
+        
+
+
+
+        if(data.message == previousMessage && data.name == previousName)
+        {
+            console.log(" Are there updates Ran. No new updates.");
+            return false;
+        }
+        else
+        {
+            console.log(" Are there updates Ran. There are new updates.");
+            return true;
+        }
+
+
+    })
     }
     
