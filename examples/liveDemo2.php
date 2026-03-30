@@ -15,7 +15,7 @@
 
 </head>
 
-<body>
+<body onload="startTimer()">
 
 <!--
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#simpleModal">
@@ -111,6 +111,7 @@
 
                 <button type="button" onclick="clientValidateAndSend()">Actual Button. Update Database Button. Yes. This is that button</button>
                 <button type="button" onclick="getUpdates()">Get Updates Button. Yes. This is that button</button>
+                <button type="button" onclick="stopTimer()">Stop Timer Button. It is annoying</button>
             </form>
 
         </div>

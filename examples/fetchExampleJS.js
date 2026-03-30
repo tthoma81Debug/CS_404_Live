@@ -1,6 +1,7 @@
 var randomDudeAvatar = "smileYellow.jpg";
 var trollAvatar = "redFrown.jpg";
 var currentAvatar = randomDudeAvatar;
+var theTimer;
 
 function clientValidateAndSend()
 {
@@ -179,4 +180,18 @@ function sendScore(name, message){
         console.log("handleResponse called. response is: ", response);
     }
         */
+
+
+
+    function startTimer()
+    {
+        console.log("Timer started. Will fetch updates every 5 seconds.");
+        theTimer = setInterval(getUpdates, 5000);
+    }
+
+    function stopTimer()
+    {
+        clearInterval(theTimer);
+        console.log("Timer stopped.");
+    }
     
