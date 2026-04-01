@@ -21,53 +21,35 @@
             //lets run a query
 
             
-            $theSQL = "Select * from PostsTable;";
-            $theStatement = TheModel\simpleQuery($db,$theSQL);
-            $theStatement->bind_result($theKey, $usernameFromDB, $messageFromDB, $roleFromDB);
-            
-            /*
-            while($theStatement->fetch()){
-                echo "Key: " . $theKey . " Username: " . $usernameFromDB . " Message: " . $messageFromDB . " Role: " . $roleFromDB . "\n";
-            }
-            */
+        $theSQL = "SELECT * FROM PostsTable;";
+        $theStatement = TheModel\simpleQuery($db, $theSQL);
+        $theStatement->bind_result($theKey, $usernameFromDB, $messageFromDB, $roleFromDB);
 
-            
+        $databaseResults = [];
 
-            if($theStatement->fetch()){
-               
-                 $databaseResults = [
-                    'username' => $usernameFromDB,
-                    'role' => $roleFromDB,
-                    'message' => $messageFromDB
-                ];
-                $jsonDataToSend = json_encode($databaseResults);
-                echo $jsonDataToSend;
+        // Build array of all rows
+        while ($theStatement->fetch()) {
+            $databaseResults[] = [
+                'key'      => $theKey,
+                'username' => $usernameFromDB,
+                'role'     => $roleFromDB,
+                'message'  => $messageFromDB
+         ];
+    }
 
+// Close result/statement and database connection
+$theStatement->close();
+$db->close();
 
-             }
-             else{
-                echo json_encode(['success' => false, 'message' => 'No posts found in the database.']);
-             }
-
-
-
-            
-
-            //$theStatement->close();
-            //$db->close();
-
-            //$nameSQL = $jsonData->name;
-            //$scoreSQL = $jsonData->score;
-            
-
-
-            //echo "Success. Rows inserted: " . $theStatement->affected_rows;
-            //close the statement and connection
-            //$theStatement->close();
-            //$db->close();
-
-            //echo $db
-     
+// Output JSON
+if (!empty($databaseResults)) {
+    echo json_encode($databaseResults);
+} else {
+    echo json_encode([
+        'success' => false,
+        'message' => 'No posts found in the database.'
+    ]);
+} 
     /*
     $exampleResponse = [
         'success' => true,

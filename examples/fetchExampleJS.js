@@ -38,27 +38,33 @@ function getUpdates(){
         console.log("Reached the second then block. Data is:", data);
         console.log("Server response: ",data);
        
-        
-        //now with template
-        var newDiv = `
-        <div Postid='exampleComponentDiv' class='componentDivClass'> 
-            
-            <div Postid='userNameDiv' class='userNameDivClass'>
-                <div Postid='userNameImageContainer' class='userImageClass'>
-                    <img src='${currentAvatar}' alt='Profile Picture Here'> </img>
-                </div>  
-                <p Postid='theUsername' class='userNameClass'>${data.username}</p>
-                <span Postid='roleExampleSpan' class='roleClass'>${data.role}</span>                 
-            </div>      
-            <p Postid='postText'>${data.message}</p>
-        </div>`;
+            const parser = new DOMParser();
 
+    for (let i = 0; i < data.length; i++) {
+        const post = data[i];  // { username, role, message }
 
-        const parser = new DOMParser();
-        const newDivNode = parser.parseFromString(newDiv, 'text/html');
-        
-        
-        mainContainer.append(newDivNode.body);
+        const newDiv = `
+            <div Postid="exampleComponentDiv" key="${post.key}" class="componentDivClass"> 
+                <div Postid="userNameDiv" class="userNameDivClass">
+                    <div Postid="userNameImageContainer" class="userImageClass">
+                        <img src="${currentAvatar}" alt="Profile Picture Here"></img>
+                    </div>  
+                    <p Postid="theUsername" class="userNameClass">${post.username}</p>
+                    <span Postid="roleExampleSpan" class="roleClass">${post.role}</span>                 
+                </div>      
+                <p Postid="postText">${post.message}</p>
+            </div>
+        `;
+
+        // Parse the HTML string into a Document
+        const doc = parser.parseFromString(newDiv, 'text/html');
+
+        // Get the actual <div> we created (the first element inside <body>)
+        const newDivNode = doc.body.firstElementChild;
+
+        // Append that node to the main container
+        mainContainer.appendChild(newDivNode);
+    }
 
         //end adding div
         
