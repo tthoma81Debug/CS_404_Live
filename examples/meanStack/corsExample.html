@@ -1,0 +1,44 @@
+
+<script>
+
+ async function handleFormSubmit(event) {
+
+  fetch('http://localhost:3000/api/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+   body: 'name=' + encodeURIComponent('John Doe') +
+      '&email=' + encodeURIComponent('john@example.com')
+  })
+  .then(response => response.text)
+  .then(result => {
+    console.log('Success:', result);
+    alert('User created successfully!');
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred while creating the user. Check the console for details.');
+  });
+}
+
+</script>
+
+<form id="userForm" action="http://localhost:3000/api/users" method="POST">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Ada Lovelace" required />
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="ada@example.com" required />
+            </div>
+
+            <div class="buttons">
+              <!-- 1. Regular form submit: boring full-page JSON -->
+              <button class="btn-boring" type="button" onclick="handleFormSubmit(event)">
+                <span class="icon">📄</span>
+                <span>Fetch...but perhaps with CORS Error </span>
+              </button>
+            </form>
