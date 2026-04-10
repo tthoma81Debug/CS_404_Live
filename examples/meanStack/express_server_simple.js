@@ -26,4 +26,15 @@ app.post('/api/users', (req, res) => {
     res.json({ message: "User received", name, email });
 });
 
+app.get('/api/users', (req, res) => {
+    // Access the parsed form data (e.g., from an HTML form with fields "name" and "email")
+    //const { name, email } = req.body;
+    
+    // Process data (e.g., save to DB)
+    console.log("yeep. it's workn");
+    
+    // Send back a JSON response (could also send plain text/HTML)
+    res.json({ message: "If you can see this...good"});
+});
+
 app.listen(3000, () => console.log('Server running on port 3000'));
