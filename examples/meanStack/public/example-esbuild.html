@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>esbuild demo – broken without bundling</title>
+  </head>
+  <body>
+    <h1>esbuild demo: raw modern JS (this will break)</h1>
+
+    <p id="status">
+      If this text never changes, the JavaScript failed to run.
+    </p>
+
+    <!-- Intentionally loads the raw JS file, *without* esbuild. -->
+    <script type="module" src="./dist/ts.min.js"></script>
+  </body>
+</html>

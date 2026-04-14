@@ -34,7 +34,7 @@ app.get('/api/users', (req, res) => {
     console.log("yeep. it's workn");
     
     // Send back a JSON response (could also send plain text/HTML)
-    res.json({ message: "If you can see this...good"});
+    res.json({ message: "If you can see this...good. and that is cool. and here is a new change. can you see it?"});
 });
 
 app.listen(3000, () => console.log('Server running on port 3000'));

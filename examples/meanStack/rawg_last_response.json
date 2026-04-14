@@ -1,0 +1,52 @@
+{
+  "type": "screenshots",
+  "gameId": "52434",
+  "page_size": 15,
+  "count": 6,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1708380,
+      "image": "https://media.rawg.io/media/screenshots/ea8/ea8078bbe72f544be35c7616787ecb15.jpg",
+      "width": 640,
+      "height": 480,
+      "is_deleted": false
+    },
+    {
+      "id": 1708381,
+      "image": "https://media.rawg.io/media/screenshots/419/419746d3b22931842dbaf43c162c29ce.jpg",
+      "width": 640,
+      "height": 480,
+      "is_deleted": false
+    },
+    {
+      "id": 1708382,
+      "image": "https://media.rawg.io/media/screenshots/59a/59ad66928669a0790a6bd83b402a9a9b_a1SMi5I.jpg",
+      "width": 640,
+      "height": 480,
+      "is_deleted": false
+    },
+    {
+      "id": 1708383,
+      "image": "https://media.rawg.io/media/screenshots/010/010cd9a5fd719dfeecd6c441b1973e15.jpg",
+      "width": 640,
+      "height": 480,
+      "is_deleted": false
+    },
+    {
+      "id": 1708384,
+      "image": "https://media.rawg.io/media/screenshots/cd3/cd32fd7360d4e9389a5ba7df404cbe36.jpg",
+      "width": 640,
+      "height": 480,
+      "is_deleted": false
+    },
+    {
+      "id": 1708385,
+      "image": "https://media.rawg.io/media/screenshots/b2e/b2e8f15a030fb05e09e0ab01dfbb12c3.jpg",
+      "width": 640,
+      "height": 480,
+      "is_deleted": false
+    }
+  ]
+}

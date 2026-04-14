@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RAWG Game Explorer – Async Neon</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent: #ff00ff;
+      --accent2: #00e5ff;
+      --bg1: #050816;
+      --bg2: #111827;
+      --text-main: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #1f2933 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1080px;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-family: "Orbitron", system-ui, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #f9fafb;
+      text-shadow: 0 0 10px #22d3ee, 0 0 20px #4f46e5;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1.6fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 64, 175, 0.7));
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      box-shadow:
+        0 20px 60px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.25);
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.24), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.22), transparent 55%);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .panel-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      color: #cbd5f5;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.7);
+      color: #e5e7eb;
+      outline: none;
+      font-size: 0.95rem;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5), 0 0 12px rgba(56, 189, 248, 0.6);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .field { margin-bottom: 1rem; }
+
+    .field-inline {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 0.75rem;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    button {
+      cursor: pointer;
+      border-radius: 999px;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0f172a;
+      box-shadow:
+        0 0 12px rgba(244, 63, 94, 0.8),
+        0 0 24px rgba(56, 189, 248, 0.8);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .btn-main::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.25),
+        transparent 40%,
+        transparent 60%,
+        rgba(255, 255, 255, 0.25)
+      );
+      transform: translateX(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn-main:hover::before {
+      animation: shimmer 1s forwards;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow:
+        0 0 20px rgba(244, 63, 94, 0.9),
+        0 0 36px rgba(56, 189, 248, 0.9);
+      filter: brightness(1.05);
+    }
+
+    .btn-main:active {
+      transform: translateY(2px) scale(0.99);
+      box-shadow:
+        0 0 10px rgba(244, 63, 94, 0.7),
+        0 0 20px rgba(56, 189, 248, 0.7);
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); opacity: 0; }
+      40% { opacity: 1; }
+      100% { transform: translateX(100%); opacity: 0; }
+    }
+
+    .note {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-top: 0.2rem;
+    }
+
+    .note code {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 0.3rem;
+      padding: 0.1rem 0.35rem;
+      font-size: 0.75rem;
+    }
+
+    /* Right side: results */
+
+    .result-wrapper {
+      position: relative;
+      min-height: 260px;
+    }
+
+    .result-placeholder {
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      border-radius: 1rem;
+      padding: 1.4rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #9ca3af;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.8rem;
+      gap: 0.4rem;
+    }
+
+    .result-title {
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow:
+        0 0 6px rgba(34, 197, 94, 0.9),
+        0 0 14px rgba(34, 197, 94, 0.9);
+      animation: pulseDot 1.2s ease-in-out infinite;
+    }
+
+    .result-meta {
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(0.8); opacity: 0.7; }
+      50% { transform: scale(1.25); opacity: 1; }
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .game-card {
+      position: relative;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: radial-gradient(circle at 0 0, rgba(52, 211, 153, 0.15), transparent 55%),
+                  radial-gradient(circle at 100% 0, rgba(56, 189, 248, 0.15), transparent 55%),
+                  rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.85);
+      transform: translateY(0) scale(1);
+      transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(8, 47, 73, 0.9);
+      border-color: rgba(56, 189, 248, 0.9);
+    }
+
+    .game-thumb {
+      position: relative;
+      height: 120px;
+      background: radial-gradient(circle at 50% 0, rgba(59, 130, 246, 0.35), transparent 60%);
+      overflow: hidden;
+    }
+
+    .game-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.2) contrast(1.05);
+      transform: scale(1.02);
+    }
+
+    .game-thumb-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.95));
+    }
+
+    .game-body {
+      padding: 0.6rem 0.7rem 0.75rem;
+      font-size: 0.82rem;
+    }
+
+    .game-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      color: #e5e7eb;
+    }
+
+    .game-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      opacity: 0.9;
+      margin-bottom: 0.2rem;
+    }
+
+    .rating-badge {
+      padding: 0.1rem 0.35rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      background: rgba(251, 191, 36, 0.25);
+      color: #facc15;
+      border: 1px solid rgba(250, 204, 21, 0.7);
+    }
+
+    .tiny-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      opacity: 0.7;
+    }
+
+    .shot-meta {
+      font-size: 0.75rem;
+      color: #a5b4fc;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      padding: 0.7rem 0.9rem;
+      border-radius: 0.75rem;
+      background: rgba(21, 128, 61, 0.9);
+      color: #dcfce7;
+      font-size: 0.85rem;
+      box-shadow: 0 0 18px rgba(22, 163, 74, 0.8);
+      transform: translateY(150%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      animation: toastIn 0.3s ease-out forwards, toastOut 0.25s ease-in 3.3s forwards;
+    }
+
+    @keyframes toastIn {
+      from { transform: translateY(150%); opacity: 0; }
+      to { transform: translateY(0%); opacity: 1; }
+    }
+
+    @keyframes toastOut {
+      to { transform: translateY(150%); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>RAWG Game Explorer – Async Neon</h1>
+
+    <div class="layout">
+      <!-- LEFT: FORM -->
+      <div class="panel">
+        <div class="panel-content">
+          <form id="rawgForm">
+            <div class="field">
+              <label for="action">Action</label>
+              <select id="action" name="action">
+                <option value="search" selected>Search for games (name, rating, release date)</option>
+                <option value="screenshots">Display screenshots for a game ID</option>
+              </select>
+            </div>
+
+            <div class="field field-inline">
+              <div>
+                <label for="query">Search query (for search)</label>
+                <input id="query" name="query" type="text" placeholder="zelda" value="zelda">
+              </div>
+              <div>
+                <label for="gameId">Game ID (for screenshots)</label>
+                <input id="gameId" name="gameId" type="text" placeholder="53205" value="53205">
+              </div>
+            </div>
+
+            <div class="field" style="max-width: 160px;">
+              <label for="page_size">Results per page</label>
+              <input id="page_size" name="page_size" type="number" min="1" max="20" value="6">
+            </div>
+
+            <div class="buttons">
+              <button class="btn-main" type="button" id="fetchButton">
+                <span>Fetch from RAWG (via Express)</span>
+              </button>
+            </div>
+
+            <p class="note">
+              This form sends a POST request to <code>/rawg</code>.<br>
+              The Express server talks to the RAWG API, trims the data, and this page visualizes it.
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- RIGHT: RESULTS -->
+      <div class="panel">
+        <div class="panel-content">
+          <div class="result-wrapper" id="resultWrapper">
+            <div class="result-placeholder" id="resultPlaceholder">
+              Choose whether to search for games or load screenshots, then use the button on the left.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Talking to RAWG…</div>
+  </div>
+
+  <script>
+    const form = document.getElementById('rawgForm');
+    const actionSelect = document.getElementById('action');
+    const queryInput = document.getElementById('query');
+    const gameIdInput = document.getElementById('gameId');
+    const pageSizeInput = document.getElementById('page_size');
+    const fetchButton = document.getElementById('fetchButton');
+    const resultWrapper = document.getElementById('resultWrapper');
+    const toast = document.getElementById('toast');
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.remove('show');
+      void toast.offsetWidth; // restart animation
+      toast.classList.add('show');
+    }
+
+    function updateFieldHints() {
+      const action = actionSelect.value;
+      if (action === 'search') {
+        queryInput.style.opacity = '1';
+        gameIdInput.style.opacity = '0.4';
+      } else {
+        queryInput.style.opacity = '0.4';
+        gameIdInput.style.opacity = '1';
+      }
+    }
+
+    actionSelect.addEventListener('change', updateFieldHints);
+    updateFieldHints();
+
+    function buildSearchView(data) {
+      const query = data.query || '';
+      const count = data.count ?? 0;
+      const results = data.results || [];
+
+      if (!results.length) {
+        return `
+          <div class="result-header">
+            <div class="result-title">
+              <span class="pulse-dot"></span>
+              RAWG SEARCH – NO RESULTS
+            </div>
+            <div class="result-meta">
+              Query: <strong>${query || '(empty)'}</strong> · 0 games
+            </div>
+          </div>
+          <div class="result-placeholder">
+            No games matched that search. Try a different keyword or larger <code>page_size</code>.
+          </div>
+        `;
+      }
+
+      const countLabel = count ? `${results.length} of ~${count}` : `${results.length}`;
+      const cards = results.map(game => {
+        const name = game.name || 'Unknown title';
+        const released = game.released || 'Unknown';
+        const rating = (typeof game.rating === 'number') ? game.rating.toFixed(1) : 'N/A';
+        const img = game.image;
+
+        return `
+          <div class="game-card">
+            <div class="game-thumb">
+              ${img ? `<img src="${img}" alt="${name} cover">` : ''}
+              <div class="game-thumb-overlay"></div>
+            </div>
+            <div class="game-body">
+              <div class="game-name">${name}</div>
+              <div class="game-meta-row">
+                <span>${released}</span>
+                <span class="rating-badge">Rating: ${rating}</span>
+              </div>
+              <div class="tiny-label">Game ID: ${game.id}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="result-header">
+          <div class="result-title">
+            <span class="pulse-dot"></span>
+            RAWG SEARCH RESULTS
+          </div>
+          <div class="result-meta">
+            Query: <strong>${query || '(empty)'}</strong> · Showing ${countLabel} games
+          </div>
+        </div>
+        <div class="game-grid">
+          ${cards}
+        </div>
+      `;
+    }
+
+    function buildScreenshotView(data) {
+      const gameId = data.gameId || '';
+      const count = data.count ?? 0;
+      const results = data.results || [];
+
+      if (!results.length) {
+        return `
+          <div class="result-header">
+            <div class="result-title">
+              <span class="pulse-dot"></span>
+              RAWG SCREENSHOTS – NO RESULTS
+            </div>
+            <div class="result-meta">
+              Game ID: <strong>${gameId || '(none)'}</strong> · 0 screenshots
+            </div>
+          </div>
+          <div class="result-placeholder">
+            No screenshots found. Check the game ID (for example, 53205 is a valid RAWG game ID).
+          </div>
+        `;
+      }
+
+      const countLabel = count ? `${results.length} of ~${count}` : `${results.length}`;
+      const cards = results.map(shot => {
+        const sizeLabel = (shot.width && shot.height)
+          ? `${shot.width}×${shot.height}`
+          : 'Unknown size';
+        const status = shot.is_deleted ? 'Deleted' : 'Active';
+
+        return `
+          <div class="game-card">
+            <div class="game-thumb">
+              ${shot.image ? `<img src="${shot.image}" alt="Screenshot ${shot.id}">` : ''}
+              <div class="game-thumb-overlay"></div>
+            </div>
+            <div class="game-body">
+              <div class="game-meta-row">
+                <span class="tiny-label">Screenshot ID</span>
+                <span>#${shot.id}</span>
+              </div>
+              <div class="shot-meta">Resolution: ${sizeLabel}</div>
+              <div class="tiny-label">Status: ${status}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="result-header">
+          <div class="result-title">
+            <span class="pulse-dot"></span>
+            RAWG GAME SCREENSHOTS
+          </div>
+          <div class="result-meta">
+            Game ID: <strong>${gameId}</strong> · Showing ${countLabel} screenshots
+          </div>
+        </div>
+        <div class="game-grid">
+          ${cards}
+        </div>
+      `;
+    }
+
+    fetchButton.addEventListener('click', async () => {
+      const action = actionSelect.value;
+      const query = queryInput.value.trim();
+      const gameId = gameIdInput.value.trim();
+      const page_size = pageSizeInput.value || '6';
+
+      if (action === 'search' && !query) {
+        showToast('Enter a search query to look up games.');
+        return;
+      }
+      if (action === 'screenshots' && !gameId) {
+        showToast('Enter a RAWG game ID to load screenshots.');
+        return;
+      }
+
+      // Collect POST body as URL-encoded parameters
+      const body = new URLSearchParams({
+        action,
+        query,
+        gameId,
+        page_size,
+      });
+
+      try {
+        showToast('Sending POST to /rawg via Express…');
+
+        const response = await fetch('/rawg', {
+          method: 'POST',
+          body, // express.urlencoded will parse this
+        });
+
+        if (!response.ok) {
+          throw new Error('Server responded with ' + response.status);
+        }
+
+        const data = await response.json();
+
+        let html;
+        if (data.type === 'search') {
+          html = buildSearchView(data);
+        } else if (data.type === 'screenshots') {
+          html = buildScreenshotView(data);
+        } else {
+          html = `
+            <div class="result-placeholder">
+              Unknown response type from server.
+            </div>
+          `;
+        }
+
+        resultWrapper.innerHTML = html;
+        showToast('Data loaded successfully.');
+      } catch (err) {
+        console.error(err);
+        showToast('Error fetching from /rawg – see console for details.');
+        resultWrapper.innerHTML = `
+          <div class="result-placeholder">
+            <div>
+              <strong>Request failed.</strong><br>
+              ${err.message}
+            </div>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>

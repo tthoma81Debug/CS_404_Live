@@ -1,0 +1,30 @@
+const express = require('express');
+const app = express();
+
+// Very permissive CORS middleware (for demos only)
+app.use((req, res, next) => {
+  // Allow any origin
+  res.header('Access-Control-Allow-Origin', '*');
+
+  // Allow these HTTP methods
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+
+  // Allow these request headers
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle preflight (OPTIONS) requests quickly
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204); // No Content
+  }
+
+  next();
+});
+
+// Example route
+app.get('/example', (req, res) => {
+  res.json({ message: 'CORS is wide open here.' });
+});
+
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000');
+});

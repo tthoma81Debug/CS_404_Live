@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Demo – Boring vs Awesome</title>
+
+  <!-- Optional fun font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent: #ff00ff;
+      --accent2: #00e5ff;
+      --bg1: #050816;
+      --bg2: #111827;
+      --text-main: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #1f2933 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+    }
+
+    .page {
+      width: 100%;
+      max-width: 960px;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-family: "Orbitron", system-ui, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #f9fafb;
+      text-shadow: 0 0 10px #22d3ee, 0 0 20px #4f46e5;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1.3fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 64, 175, 0.7));
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      box-shadow:
+        0 20px 60px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.25);
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.24), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.22), transparent 55%);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .panel-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      color: #cbd5f5;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.7);
+      color: #e5e7eb;
+      outline: none;
+      font-size: 0.95rem;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5), 0 0 12px rgba(56, 189, 248, 0.6);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .field {
+      margin-bottom: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    button {
+      cursor: pointer;
+      border-radius: 999px;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    button span.icon {
+      font-size: 1.2rem;
+    }
+
+    .btn-boring {
+      background: #d4d4d8;
+      color: #18181b;
+      box-shadow: 0 4px 0 #a1a1aa;
+    }
+
+    .btn-boring:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 0 #a1a1aa;
+      filter: brightness(0.98);
+    }
+
+    .btn-boring:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #71717a;
+    }
+
+    .btn-awesome {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0f172a;
+      box-shadow:
+        0 0 12px rgba(244, 63, 94, 0.8),
+        0 0 24px rgba(56, 189, 248, 0.8);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .btn-awesome::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.25),
+        transparent 40%,
+        transparent 60%,
+        rgba(255, 255, 255, 0.25)
+      );
+      transform: translateX(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn-awesome:hover::before {
+      animation: shimmer 1s forwards;
+    }
+
+    .btn-awesome:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow:
+        0 0 20px rgba(244, 63, 94, 0.9),
+        0 0 36px rgba(56, 189, 248, 0.9);
+      filter: brightness(1.05);
+    }
+
+    .btn-awesome:active {
+      transform: translateY(2px) scale(0.99);
+      box-shadow:
+        0 0 10px rgba(244, 63, 94, 0.7),
+        0 0 20px rgba(56, 189, 248, 0.7);
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      40% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    .note {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-top: 0.2rem;
+    }
+
+    /* Right side: flashy result area */
+
+    .result-wrapper {
+      position: relative;
+      min-height: 240px;
+    }
+
+    .result-placeholder {
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      border-radius: 1rem;
+      padding: 1.2rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #9ca3af;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .result-card {
+      position: relative;
+      border-radius: 1.4rem;
+      padding: 1.5rem 1.7rem;
+      background: radial-gradient(circle at 0 0, rgba(52, 211, 153, 0.2), transparent 65%),
+                  radial-gradient(circle at 100% 0, rgba(56, 189, 248, 0.2), transparent 65%),
+                  linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(12, 10, 32, 0.9));
+      box-shadow:
+        0 0 25px rgba(34, 197, 235, 0.7),
+        0 0 60px rgba(244, 63, 94, 0.65);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      overflow: hidden;
+      color: #e5e7eb;
+    }
+
+    .result-card::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background:
+        conic-gradient(
+          from 0deg,
+          rgba(244, 63, 94, 0.0),
+          rgba(244, 63, 94, 0.8),
+          rgba(59, 130, 246, 0.8),
+          rgba(34, 197, 235, 0.8),
+          rgba(244, 63, 94, 0.0)
+        );
+      animation: spinGlow 6s linear infinite;
+      mix-blend-mode: screen;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .result-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .result-title {
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.78rem;
+      opacity: 0.9;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .result-title .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow:
+        0 0 6px rgba(34, 197, 94, 0.9),
+        0 0 14px rgba(34, 197, 94, 0.9);
+      animation: pulseDot 1.2s ease-in-out infinite;
+    }
+
+    /* New fancy layout for the data itself */
+
+    .identity-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+
+    .identity-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.7;
+    }
+
+    .highlight-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fbbf24;
+      text-shadow:
+        0 0 8px rgba(250, 250, 46, 0.8),
+        0 0 18px rgba(253, 224, 71, 0.9);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .glow-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .glow-pill {
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.3), transparent 70%);
+      border: 1px solid rgba(56, 189, 248, 0.8);
+      font-size: 0.8rem;
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    .glow-pill span.value {
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+
+    .status-pill {
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.18);
+      border: 1px solid rgba(34, 197, 94, 0.9);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #bbf7d0;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.8rem;
+    }
+
+    .info-item {
+      padding: 0.55rem 0.7rem;
+      border-radius: 0.75rem;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .info-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.7;
+      margin-bottom: 0.15rem;
+    }
+
+    .info-value {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #e5e7eb;
+      word-break: break-all;
+    }
+
+    .tiny-json-wrapper {
+      margin-top: 0.6rem;
+    }
+
+    .tiny-json-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      opacity: 0.7;
+      margin-bottom: 0.2rem;
+    }
+
+    .tiny-json {
+      font-family: "SF Mono", "Fira Code", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 0.75rem;
+      padding: 0.6rem 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      max-height: 90px;
+      overflow: auto;
+      color: #e5e7eb;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(94, 234, 212, 0.7);
+      color: #a5f3fc;
+    }
+
+    .tag.flash {
+      border-color: rgba(250, 204, 21, 0.9);
+      color: #facc15;
+      animation: blinkTag 1s steps(2, start) infinite;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      padding: 0.7rem 0.9rem;
+      border-radius: 0.75rem;
+      background: rgba(21, 128, 61, 0.9);
+      color: #dcfce7;
+      font-size: 0.85rem;
+      box-shadow: 0 0 18px rgba(22, 163, 74, 0.8);
+      transform: translateY(150%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      animation: toastIn 0.3s ease-out forwards, toastOut 0.25s ease-in 3.3s forwards;
+    }
+
+    @keyframes toastIn {
+      from {
+        transform: translateY(150%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0%);
+        opacity: 1;
+      }
+    }
+
+    @keyframes toastOut {
+      to {
+        transform: translateY(150%);
+        opacity: 0;
+      }
+    }
+
+    @keyframes spinGlow {
+      from {
+        transform: rotate(0deg) translate3d(0, 0, 0);
+      }
+      to {
+        transform: rotate(360deg) translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes pulseDot {
+      0%, 100% {
+        transform: scale(0.8);
+        opacity: 0.7;
+      }
+      50% {
+        transform: scale(1.25);
+        opacity: 1;
+      }
+    }
+
+    @keyframes blinkTag {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Boring Submit vs. Async Neon Power-Up</h1>
+
+    <div class="layout">
+      <!-- LEFT: FORM -->
+      <div class="panel">
+        <div class="panel-content">
+          <form id="userForm" action="/api/users" method="POST">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Ada Lovelace" required />
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="ada@example.com" required />
+            </div>
+
+            <div class="buttons">
+              <!-- 1. Regular form submit: boring full-page JSON -->
+              <button class="btn-boring" type="submit">
+                <span class="icon">📄</span>
+                <span>Submit (boring)</span>
+              </button>
+
+              <!-- 2. Async fetch: stays on page, shows flashy visual result -->
+              <button class="btn-awesome" type="button" id="awesomeButton">
+                <span class="icon">⚡</span>
+                <span>Submit with Neon Awesomeness</span>
+              </button>
+            </div>
+
+            <p class="note">
+              Left button: page reloads and you just see plain JSON.<br>
+              Right button: same request, but handled with JavaScript and turned into a visual fireworks show.
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- RIGHT: FLASHY RESULT -->
+      <div class="panel">
+        <div class="panel-content">
+          <div class="result-wrapper" id="resultWrapper">
+            <div class="result-placeholder" id="resultPlaceholder">
+              Hit the <strong>Neon Awesomeness</strong> button to see your data come alive here.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast">Data received from server ✨</div>
+  </div>
+
+  <script>
+    const awesomeButton = document.getElementById('awesomeButton');
+    const form = document.getElementById('userForm');
+    const resultWrapper = document.getElementById('resultWrapper');
+    const resultPlaceholder = document.getElementById('resultPlaceholder');
+    const toast = document.getElementById('toast');
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.remove('show');
+      // Force reflow to restart animation
+      void toast.offsetWidth;
+      toast.classList.add('show');
+    }
+
+    awesomeButton.addEventListener('click', async () => {
+      const formData = new FormData(form);
+      const name = formData.get('name');
+      const email = formData.get('email');
+
+      if (!name || !email) {
+        showToast('Please fill out both fields before summoning the neon.');
+        return;
+      }
+
+      try {
+        const body = new URLSearchParams(formData);
+
+        const response = await fetch('/rawg', {
+          method: 'POST',
+          body
+          // fetch sets Content-Type automatically for URLSearchParams
+        });
+
+        if (!response.ok) {
+          throw new Error('Server responded with status ' + response.status);
+        }
+
+        const data = await response.json();
+
+        const prettyJson = JSON.stringify(data, null, 2);
+        const timestamp = new Date().toLocaleTimeString();
+
+        const card = document.createElement('div');
+        card.className = 'result-card';
+
+        // COOL, VISUAL CARD USING THE DATA (name, email, status)
+        card.innerHTML = `
+          <div class="result-inner">
+            <div class="result-title">
+              <span class="pulse-dot"></span>
+              LIVE RESPONSE FROM EXPRESS SERVER
+            </div>
+
+            <div class="identity-line">
+              <span class="identity-label">User Identity</span>
+              <span class="highlight-name">${name}</span>
+            </div>
+
+            <div class="glow-pill-row">
+              <div class="glow-pill">
+                <span>Email</span>
+                <span class="value">${email}</span>
+              </div>
+              <div class="status-pill">
+                ${data.message || 'User received'}
+              </div>
+            </div>
+
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-label">Endpoint</div>
+                <div class="info-value">POST /api/users</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Received at</div>
+                <div class="info-value">${timestamp}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Server echo (name)</div>
+                <div class="info-value">${data.name || ''}</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Server echo (email)</div>
+                <div class="info-value">${data.email || ''}</div>
+              </div>
+            </div>
+
+            <div class="tag-row">
+              <span class="tag">AJAX</span>
+              <span class="tag">fetch()</span>
+              <span class="tag flash">Async Power-Up</span>
+              <span class="tag">Express.js</span>
+            </div>
+
+            <div class="tiny-json-wrapper">
+              <div class="tiny-json-label">Raw JSON (for the curious)</div>
+              <pre class="tiny-json">${prettyJson}</pre>
+            </div>
+          </div>
+        `;
+
+        resultWrapper.innerHTML = '';
+        resultWrapper.appendChild(card);
+
+        showToast('Async response received from Express! ⚡');
+      } catch (err) {
+        console.error(err);
+        showToast('Error talking to the server. Check the console.');
+        resultWrapper.innerHTML = `
+          <div class="result-card">
+            <div class="result-inner">
+              <div class="result-title">
+                <span class="pulse-dot" style="background:#f97316;box-shadow:0 0 6px rgba(249,115,22,0.9),0 0 14px rgba(249,115,22,0.9);"></span>
+                SOMETHING WENT WRONG
+              </div>
+              <div class="identity-line">
+                <span class="identity-label">Error</span>
+                <span class="highlight-name" style="font-size:1.2rem;">${err.message}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
