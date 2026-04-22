@@ -1,11 +1,20 @@
-"use client"; // Make this a Client Component so we can later use hooks
+"use client";
+
+import { useState } from "react";
 
 export default function HomePage() {
   const teacherName = "Dude in Jacket";
   const studentCount = 10;
-
-  // Very simple JavaScript logic inside a component:
   const hasManyStudents = studentCount > 5;
+
+  // React state:
+  const [clicks, setClicks] = useState(0);
+
+  function handleButtonClick() {
+    // Update state
+    setClicks(clicks + 1);
+    // (Optionally, can show setClicks(prev => prev + 1) later.)
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-slate-900 text-white">
@@ -28,6 +37,21 @@ export default function HomePage() {
             ? "We have a big group today!"
             : "Small, focused group today."}
         </p>
+
+        {/* State + event handler demo */}
+        <div className="mt-6 border-t border-slate-700 pt-4">
+          <p className="mb-2">
+            Button clicks:{" "}
+            <span className="font-mono text-sky-300">{clicks}</span>
+          </p>
+
+          <button
+            onClick={handleButtonClick}
+            className="px-4 py-2 rounded-md bg-sky-500 hover:bg-sky-400 text-slate-900 font-semibold"
+          >
+            Click me
+          </button>
+        </div>
       </div>
     </main>
   );
