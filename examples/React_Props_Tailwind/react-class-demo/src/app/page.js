@@ -1,19 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import CounterDisplay from "./counterDisplay";
+import CounterControls from "./counterControls";
 
 export default function HomePage() {
   const teacherName = "Dude in Jacket";
   const studentCount = 10;
   const hasManyStudents = studentCount > 5;
 
-  // React state:
   const [clicks, setClicks] = useState(0);
 
-  function handleButtonClick() {
-    // Update state
+  function handleIncrement() {
     setClicks(clicks + 1);
-    // (Optionally, can show setClicks(prev => prev + 1) later.)
+  }
+
+  function handleReset() {
+    setClicks(0);
   }
 
   return (
@@ -38,19 +41,16 @@ export default function HomePage() {
             : "Small, focused group today."}
         </p>
 
-        {/* State + event handler demo */}
-        <div className="mt-6 border-t border-slate-700 pt-4">
-          <p className="mb-2">
-            Button clicks:{" "}
-            <span className="font-mono text-sky-300">{clicks}</span>
-          </p>
+        {/* Children using props */}
+        <div className="mt-6 border-t border-slate-700 pt-4 space-y-3">
+          {/* Props down: clicks */}
+          <CounterDisplay clicks={clicks} />
 
-          <button
-            onClick={handleButtonClick}
-            className="px-4 py-2 rounded-md bg-sky-500 hover:bg-sky-400 text-slate-900 font-semibold"
-          >
-            Click me
-          </button>
+          {/* Props down: callback functions */}
+          <CounterControls
+            onIncrement={handleIncrement}
+            onReset={handleReset}
+          />
         </div>
       </div>
     </main>
