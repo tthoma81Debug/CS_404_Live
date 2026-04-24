@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CounterDisplay from "./counterDisplay";
 import CounterControls from "./counterControls";
+import NameInput from "./NameInput";
 
 export default function HomePage() {
   const teacherName = "Dude in Jacket";
@@ -10,6 +11,12 @@ export default function HomePage() {
   const hasManyStudents = studentCount > 5;
 
   const [clicks, setClicks] = useState(0);
+  const [studentName, setStudentName] = useState("");
+
+  // useEffect runs after React has updated the screen
+  useEffect(() => {
+    document.title = `Clicks: ${clicks}`;
+  }, [clicks]);
 
   function handleIncrement() {
     setClicks(clicks + 1);
@@ -17,6 +24,10 @@ export default function HomePage() {
 
   function handleReset() {
     setClicks(0);
+  }
+
+  function handleStudentNameChange(newName) {
+    setStudentName(newName);
   }
 
   return (
@@ -41,17 +52,20 @@ export default function HomePage() {
             : "Small, focused group today."}
         </p>
 
-        {/* Children using props */}
+        {/* Counter section */}
         <div className="mt-6 border-t border-slate-700 pt-4 space-y-3">
-          {/* Props down: clicks */}
           <CounterDisplay clicks={clicks} />
-
-          {/* Props down: callback functions */}
           <CounterControls
             onIncrement={handleIncrement}
             onReset={handleReset}
           />
         </div>
+
+        {/* Name input section */}
+        <NameInput
+          studentName={studentName}
+          onStudentNameChange={handleStudentNameChange}
+        />
       </div>
     </main>
   );
