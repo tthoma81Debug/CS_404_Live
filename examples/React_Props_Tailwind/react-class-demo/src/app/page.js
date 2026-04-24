@@ -12,11 +12,29 @@ export default function HomePage() {
 
   const [clicks, setClicks] = useState(0);
   const [studentName, setStudentName] = useState("");
+  const [serverMessage, setServerMessage] = useState("");
 
   // useEffect runs after React has updated the screen
   useEffect(() => {
     document.title = `Clicks: ${clicks}`;
   }, [clicks]);
+
+  useEffect(() => {
+  async function loadMessage() {
+    try {
+      const res = await fetch("http://localhost:4000/api/message");
+      const data = await res.json();
+      setServerMessage(data.message);
+    } catch (error) {
+      console.error("Error fetching from Express API", error);
+      setServerMessage("Could not reach Express API");
+    }
+  }
+
+  loadMessage();
+}, []); // [] = run once when component mounts
+
+
 
   function handleIncrement() {
     setClicks(clicks + 1);
@@ -67,6 +85,16 @@ export default function HomePage() {
           onStudentNameChange={handleStudentNameChange}
         />
       </div>
+
+
+      <div className="mt-6 border-t border-slate-700 pt-4">
+  <p className="text-sm text-slate-300">
+    Message from Express:{" "}
+    <span className="font-semibold text-emerald-300">
+      {serverMessage || "Loading..."}
+    </span>
+  </p>
+</div>
     </main>
   );
 }
