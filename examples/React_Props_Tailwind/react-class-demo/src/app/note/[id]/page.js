@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import Link from "next/link";
 
 export default function NoteDetailPage({ params }) {
-  const { id } = params; // comes from the [id] segment in the URL
+  const { id } = use(params);
 
   const [note, setNote] = useState(null);
   const [status, setStatus] = useState("loading"); // "loading" | "error" | "done"
