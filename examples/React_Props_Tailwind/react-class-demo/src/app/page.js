@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import CounterDisplay from "./counterDisplay";
 import CounterControls from "./counterControls";
 import NameInput from "./NameInput";
+import { AppProvider } from "./AppStateContext";
+import NotesSection from "./NotesSection";
 
-export default function HomePage() {
+function HomePageContent() {
   const teacherName = "Dude in Jacket";
   const studentCount = 10;
   const hasManyStudents = studentCount > 5;
@@ -14,27 +16,26 @@ export default function HomePage() {
   const [studentName, setStudentName] = useState("");
   const [serverMessage, setServerMessage] = useState("");
 
-  // useEffect runs after React has updated the screen
+  // Effect: update document title with click count
   useEffect(() => {
     document.title = `Clicks: ${clicks}`;
   }, [clicks]);
 
+  // Effect: fetch simple message from Express
   useEffect(() => {
-  async function loadMessage() {
-    try {
-      const res = await fetch("http://localhost:4000/api/message");
-      const data = await res.json();
-      setServerMessage(data.message);
-    } catch (error) {
-      console.error("Error fetching from Express API", error);
-      setServerMessage("Could not reach Express API");
+    async function loadMessage() {
+      try {
+        const res = await fetch("http://localhost:4000/api/message");
+        const data = await res.json();
+        setServerMessage(data.message);
+      } catch (error) {
+        console.error("Error fetching from Express API", error);
+        setServerMessage("Could not reach Express API");
+      }
     }
-  }
 
-  loadMessage();
-}, []); // [] = run once when component mounts
-
-
+    loadMessage();
+  }, []);
 
   function handleIncrement() {
     setClicks(clicks + 1);
@@ -84,17 +85,28 @@ export default function HomePage() {
           studentName={studentName}
           onStudentNameChange={handleStudentNameChange}
         />
+
+        {/* Message from Express server */}
+        <div className="mt-6 border-t border-slate-700 pt-4">
+          <p className="text-sm text-slate-300">
+            Message from Express:{" "}
+            <span className="font-semibold text-emerald-300">
+              {serverMessage || "Loading..."}
+            </span>
+          </p>
+        </div>
+
+        {/* Notes section powered by Context + Reducer + MongoDB */}
+        <NotesSection />
       </div>
-
-
-      <div className="mt-6 border-t border-slate-700 pt-4">
-  <p className="text-sm text-slate-300">
-    Message from Express:{" "}
-    <span className="font-semibold text-emerald-300">
-      {serverMessage || "Loading..."}
-    </span>
-  </p>
-</div>
     </main>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <AppProvider>
+      <HomePageContent />
+    </AppProvider>
   );
 }
