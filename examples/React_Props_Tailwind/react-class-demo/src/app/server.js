@@ -1,4 +1,3 @@
-
 require("dotenv").config({ path: ".env.local" }); // Load MONGODB_* env vars
 
 const express = require("express");
